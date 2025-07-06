@@ -1,0 +1,17 @@
+# frontend/Dockerfile
+FROM node:21.5.0
+
+WORKDIR /app
+
+# パッケージ情報を先にコピーして依存インストール（キャッシュ効率）
+COPY package.json package-lock.json* ./
+RUN npm install
+
+# アプリ全体をコピー
+COPY . .
+
+# ポート開放（開発時用）
+EXPOSE 3000
+
+# 開発サーバを起動
+CMD ["npm", "run", "dev"]
